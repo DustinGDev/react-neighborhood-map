@@ -8,6 +8,7 @@ nav {
   height: 100vh;
   background: black;
   box-sizing: border-box;
+  padding: 10px;
 }
 
 main {
@@ -31,5 +32,9 @@ main {
   height: 20vh;
   z-index: 1;
   position: fixed;
+  color: white;
+}
+
+.list-item {
   color: white;
 }

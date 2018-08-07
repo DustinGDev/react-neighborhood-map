@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import Map from './Map.js';
 import Navigation from './Navigation.js'
 import './App.css';
+import escapeRegExp from 'escape-string-regexp';
 
 // Enter your foresquare credentials here
 const foursquare = require('react-foursquare')({
@@ -10,15 +11,12 @@ const foursquare = require('react-foursquare')({
   clientSecret: 'UDPZGP0PSA5A0344VE44O2ZJRDW4RUKPRSUVJ1DLL1QNRYBB'
 });
 
-const params = {
-  "query": 'Bremen Paddys'
-};
-
 class App extends Component {
   constructor() {
     super();
 
-    // This Value is the Center of the Map
+    // This Value is the Center of the Map and the search location for foresquare
+    // Change this value to the center of your Neigbhorhood
     this.lat = 53.079296;
     this.lng = 8.801694;
 
@@ -30,35 +28,35 @@ class App extends Component {
           },
           zoom: 11
         },
-        placesArr: [
-          {
-            "ll": `${this.lat},${this.lng}`,
-            "query": 'Tower Musicclub'
-          }, {
-            "ll": `${this.lat},${this.lng}`,
-            "query": 'Paddys'
-          } ,{
-            "ll": `${this.lat},${this.lng}`,
-            "query": 'Dannys'
-          } ,{
-            "ll": `${this.lat},${this.lng}`,
-            "query": 'Übersee Museum'
-          } ,{
-            "ll": `${this.lat},${this.lng}`,
-            "query": 'Universum Bremen'
-          }
-        ]
+        // This Array contains the location Foresquare looks for. Add and delete locations as you like.
+        placesArr: ['Tower Musicclub',
+                    'Paddys',
+                    'Dannys',
+                    'Übersee Museum',
+                    'Universum Bremen',
+                    'DMK Hauptverwaltung',
+                    'Tattoo'
+        ],
+        searchQuery:  ''
       }
  }
 
+  // Fetches all the data from Foresquare via the Foresquare API
   componentDidMount() {
       const newArr =  [];
       const promisesArr = this.state.placesArr.map(place => {
-         return foursquare.venues.getVenues(place)
-                          .then(res => {
-                            if(res.meta.code === 200)
-                            newArr.push(res.response.venues[0])
-                          })
+         return foursquare.venues.getVenues({"ll": `${this.lat},${this.lng}`,
+                                            "query": place})
+                                            .then(res => {
+                                              if(res && res.meta.code === 200 &&  res.response.venues[0])
+                                              newArr.push(res.response.venues[0])
+                                              else if (!res.response.venues[0]) {
+                                                console.log('venue not found')
+                                              }
+                                              else {
+                                                console.log(res) // Api Errors are shown in the console
+                                              }
+                                            })
       });
 
       Promise.all(promisesArr)
@@ -67,11 +65,30 @@ class App extends Component {
               }))
   }
 
+  // Update function for the search query in the Navigation
+  updateQuery = (target) => {
+    this.setState({
+      searchQuery: target.value
+    })
+  }
+
   render() {
+    let filteredPlaces;
+    if(this.state.searchQuery) {
+      const match = new RegExp(escapeRegExp(this.state.searchQuery), 'i');
+      if(this.state.placesData)
+      filteredPlaces = this.state.placesData.filter((place) => match.test(place.name));
+    } else {
+      filteredPlaces = this.state.placesData;
+    }
+    console.log(filteredPlaces)
     return (
       <div className="App">
-        <Navigation/>
-        <Map mapStats={this.state.mapStats} placesData={this.state.placesData}/>
+        <Navigation searchQuery={this.state.searchQuery}
+                    updateQuery={this.updateQuery}
+                    placesData={filteredPlaces}/>
+        <Map mapStats={this.state.mapStats}
+             placesData={filteredPlaces}/>
       </div>
     );
   }

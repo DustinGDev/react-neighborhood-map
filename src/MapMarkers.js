@@ -25,7 +25,6 @@ class MapMarkers extends Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <div className={this.state.classNames.join(' ')} data-id={this.props.data.id} onClick={this.toggleInfoWindow} ref='ref'>
         {
