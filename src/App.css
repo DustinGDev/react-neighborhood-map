@@ -31,4 +31,5 @@ main {
   height: 20vh;
   z-index: 1;
   position: fixed;
+  color: white;
 }

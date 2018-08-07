@@ -2,23 +2,30 @@ import React, { Component } from 'react';
 import InfoWindow from './InfoWindow.js'
 
 class MapMarkers extends Component {
-  state = {
-     classNames: ['map-marker'],
-     infoOpen: false
+  constructor() {
+    super();
+    this.state = {
+       classNames: ['map-marker'],
+       infoOpen: false
+    }
   }
 
   toggleInfoWindow = () => {
     const currentInfoWindow = document.querySelector('.info-window');
     if (currentInfoWindow && !(this.refs.ref === currentInfoWindow)) currentInfoWindow.click();
     this.setState((prevState) => {
-      classNames: prevState.classNames.includes('info-window') ?
+      prevState.classNames.includes('info-window') ?
                   prevState.classNames.splice(prevState.classNames.indexOf('info-window', 1)) :
                   prevState.classNames.push('info-window');
-      infoOpen: prevState.infoOpen ? false : true
+      return {
+        classNames: prevState.classNames,
+        infoOpen:   prevState.infoOpen ? false : true
+      }
     });
   }
 
   render() {
+    console.log(this.state)
     return (
       <div className={this.state.classNames.join(' ')} data-id={this.props.data.id} onClick={this.toggleInfoWindow} ref='ref'>
         {

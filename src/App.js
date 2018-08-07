@@ -55,7 +55,10 @@ class App extends Component {
       const newArr =  [];
       const promisesArr = this.state.placesArr.map(place => {
          return foursquare.venues.getVenues(place)
-                          .then(res => newArr.push(res.response.venues[0]))
+                          .then(res => {
+                            if(res.meta.code === 200)
+                            newArr.push(res.response.venues[0])
+                          })
       });
 
       Promise.all(promisesArr)

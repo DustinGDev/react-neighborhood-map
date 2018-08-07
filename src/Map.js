@@ -22,6 +22,7 @@ class Map extends Component {
           defaultCenter={this.props.mapStats.center}
           defaultZoom={this.props.mapStats.zoom}
           onClick={this.refresh}
+          options={{disableDoubleClickZoom: true}}
         >
           { this.props.placesData?
             this.props.placesData.map(place => {
