@@ -93,8 +93,10 @@ class App extends Component {
   };
 
   setContent = (index, addressData) => {
-    this.setState(prevState => {
-      prevState.locations[index].content = addressData;
+    const locationsObj = this.state.locations;
+    locationsObj[index].content = addressData;
+    this.setState({
+      locations: locationsObj
     });
   };
 
