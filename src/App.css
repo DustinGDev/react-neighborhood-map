@@ -3,6 +3,7 @@
   flex-wrap: wrap;
 }
 
+/*Main Parts*/
 nav {
   width: 20%;
   height: 100vh;
@@ -31,6 +32,7 @@ header img:hover {
   transition: 0.5s;
 }
 
+/*Map stylings*/
 .map-marker {
   background: white;
   padding: 0px 10px;
@@ -47,12 +49,19 @@ header img:hover {
 }
 
 .info-window {
+  position: relative;
   background: black!important;
+  border: grey 2px solid;
   width: 20vw;
   height: 20vh;
   z-index: 1;
   position: fixed;
   color: white;
+}
+
+.info-window img {
+  max-width: 70%;
+  max-height: 24%;
 }
 
 .list-item {
@@ -71,8 +80,13 @@ header img:hover {
   margin-left: 0;
 }
 
-@media only screen and (max-width: 950px) {
+.api-attribution {
+  position: absolute;
+  bottom: 4px;
+  font-size: 0.7em;
+}
 
+@media only screen and (max-width: 950px) {
   header {
     display: block;
   }
@@ -87,6 +101,27 @@ header img:hover {
     height: 95vh;
     bottom: 0px;
     margin-left: -250px;
-    z-index: 1;
+    z-index: 2;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .info-window {
+    width: 40vw;
+    height:  40vh;
+  }
+}
+
+@media only screen and (max-height: 800px) {
+  header {
+    height: 8vh;
+  }
+
+  main {
+    height: 92vh;
+  }
+
+  nav {
+    height: 92vh;
   }
 }

@@ -3,9 +3,8 @@ import React from 'react';
 const InfoWindow = (props) => {
   let pictureWidth =  document.documentElement.clientWidth / 10;
   let pictureHeight =  document.documentElement.clientHeight / 5 / 4;
-  console.log(pictureWidth, pictureHeight)
   return (
-    <div>
+    <div id={props.data.id}>
       <h2>{props.data.name}</h2>
       <p>Address: {props.data.location.formattedAddress.join(' ')}</p>
       {props.data.categories[0] &&

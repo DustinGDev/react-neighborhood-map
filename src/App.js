@@ -19,6 +19,7 @@ class App extends Component {
     // Change this value to the center of your Neigbhorhood
     this.lat = 53.079296;
     this.lng = 8.801694;
+    this.zoom = 13;
 
     this.state = {
       mapStats: {
@@ -26,7 +27,7 @@ class App extends Component {
             lat: this.lat,
             lng: this.lng
           },
-          zoom: 13
+          zoom: this.zoom
         },
         // This Array contains the location Foresquare looks for. Add and delete locations as you like.
         placesArr: ['Tower Musicclub',
@@ -44,7 +45,6 @@ class App extends Component {
 
   // Fetches all the data from Foresquare via the Foresquare API
   componentDidMount() {
-    console.log(foursquare.venues)
       const newArr =  [];
       const promisesArr = this.state.placesArr.map(place => {
          return foursquare.venues.getVenues({"ll": `${this.lat},${this.lng}`,
@@ -83,7 +83,6 @@ class App extends Component {
     } else {
       filteredPlaces = this.state.placesData;
     }
-    console.log(filteredPlaces)
     return (
       <div className="App">
         <Header/>

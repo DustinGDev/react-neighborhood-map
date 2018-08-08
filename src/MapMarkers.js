@@ -43,7 +43,7 @@ class MapMarkers extends Component {
     return (
       <div className={this.state.classNames.join(' ')} data-id={this.props.data.id} onClick={this.toggleInfoWindow} ref='ref'>
         {
-          this.state.infoOpen ? <InfoWindow data={this.props.data} photo={this.state.photo}/> : <p>{this.props.data.name}</p>
+          this.state.infoOpen ? <InfoWindow data={this.props.data} photo={this.state.photo}/> : <p className="marker-text">{this.props.data.name}</p>
         }
       </div>
     )
