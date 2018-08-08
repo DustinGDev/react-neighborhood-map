@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import Map from './Map.js';
 import Navigation from './Navigation.js'
 import './App.css';
 import escapeRegExp from 'escape-string-regexp';
+import Header from './Header.js';
 
 // Enter your foresquare credentials here
 const foursquare = require('react-foursquare')({
@@ -26,7 +26,7 @@ class App extends Component {
             lat: this.lat,
             lng: this.lng
           },
-          zoom: 11
+          zoom: 13
         },
         // This Array contains the location Foresquare looks for. Add and delete locations as you like.
         placesArr: ['Tower Musicclub',
@@ -35,7 +35,8 @@ class App extends Component {
                     'Übersee Museum',
                     'Universum Bremen',
                     'DMK Hauptverwaltung',
-                    'Tattoo'
+                    'Tattoo',
+                    'Sportradar'
         ],
         searchQuery:  ''
       }
@@ -43,6 +44,7 @@ class App extends Component {
 
   // Fetches all the data from Foresquare via the Foresquare API
   componentDidMount() {
+    console.log(foursquare.venues)
       const newArr =  [];
       const promisesArr = this.state.placesArr.map(place => {
          return foursquare.venues.getVenues({"ll": `${this.lat},${this.lng}`,
@@ -51,7 +53,7 @@ class App extends Component {
                                               if(res && res.meta.code === 200 &&  res.response.venues[0])
                                               newArr.push(res.response.venues[0])
                                               else if (!res.response.venues[0]) {
-                                                console.log('venue not found')
+                                                console.log(`venue ${place} not found`)
                                               }
                                               else {
                                                 console.log(res) // Api Errors are shown in the console
@@ -84,11 +86,13 @@ class App extends Component {
     console.log(filteredPlaces)
     return (
       <div className="App">
+        <Header/>
         <Navigation searchQuery={this.state.searchQuery}
                     updateQuery={this.updateQuery}
                     placesData={filteredPlaces}/>
         <Map mapStats={this.state.mapStats}
-             placesData={filteredPlaces}/>
+             placesData={filteredPlaces}
+             foresquare={foursquare}/>
       </div>
     );
   }

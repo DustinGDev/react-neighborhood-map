@@ -10,6 +10,10 @@ class MapMarkers extends Component {
     }
   }
 
+  componentDidMount() {
+    this.getPicture();
+  }
+
   toggleInfoWindow = () => {
     const currentInfoWindow = document.querySelector('.info-window');
     if (currentInfoWindow && !(this.refs.ref === currentInfoWindow)) currentInfoWindow.click();
@@ -24,11 +28,22 @@ class MapMarkers extends Component {
     });
   }
 
+  getPicture = () => {
+    this.props.foresquare.venues.getVenuePhotos({'venue_id':this.props.data.id})
+                      .then(res => {
+                        if (res.meta.code === 200 && res.response.photos.count > 0) {
+                          this.setState({
+                            photo: res.response.photos.items[0]
+                          });
+                        }
+                      });
+  }
+
   render() {
     return (
       <div className={this.state.classNames.join(' ')} data-id={this.props.data.id} onClick={this.toggleInfoWindow} ref='ref'>
         {
-          this.state.infoOpen ? <InfoWindow data={this.props.data}/> : <p>{this.props.data.name}</p>
+          this.state.infoOpen ? <InfoWindow data={this.props.data} photo={this.state.photo}/> : <p>{this.props.data.name}</p>
         }
       </div>
     )

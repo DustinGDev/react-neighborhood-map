@@ -11,6 +11,10 @@ class Map extends Component {
     this.setState({
       refresh: 'refreshed'
     })
+
+    if (document.querySelector('nav').classList.contains('active')) {
+      document.querySelector('nav').classList.toggle('active');
+    }
   }
 
   render() {
@@ -31,6 +35,7 @@ class Map extends Component {
                       lng={place.location.lng}
                       data={place}
                       key={place.id}
+                      foresquare={this.props.foresquare}
                     />
                 )
               }) : null
