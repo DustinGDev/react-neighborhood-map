@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 import MapMarkers from './MapMarkers.js';
 
+window.gm_authFailure = function() {
+  alert('Seems like the API didnt load correctly! Try to reload the page or contact the webmaster!')
+}
+
 class Map extends Component {
   state = {
 
@@ -17,6 +21,10 @@ class Map extends Component {
     }
   }
 
+  handler(evt) {
+    console.log(evt)
+  }
+
   render() {
     return(
       <main>
@@ -26,6 +34,7 @@ class Map extends Component {
           defaultZoom={this.props.mapStats.zoom}
           onClick={this.refresh}
           options={{disableDoubleClickZoom: true}}
+          experimental={this.handler}
         >
           { this.props.placesData?
             this.props.placesData.map(place => {

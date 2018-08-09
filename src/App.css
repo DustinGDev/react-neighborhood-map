@@ -57,9 +57,11 @@ header img:hover {
   z-index: 1;
   position: fixed;
   color: white;
+  overflow: hidden;
 }
 
-.info-window img {
+.info-img {
+  width: 100px;
   max-width: 70%;
   max-height: 24%;
 }
@@ -92,7 +94,7 @@ header img:hover {
   }
 
   main {
-    width: 100%;
+    width: 100%!important;
     height: 95vh;
   }
 
@@ -103,12 +105,20 @@ header img:hover {
     margin-left: -250px;
     z-index: 2;
   }
+
+  .info-img {
+    width: 80px;
+  }
 }
 
 @media only screen and (max-width: 800px) {
   .info-window {
     width: 40vw;
     height:  40vh;
+  }
+
+  .info-img {
+    width: 200px;
   }
 }
 
@@ -123,5 +133,17 @@ header img:hover {
 
   nav {
     height: 92vh;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .info-img {
+    width: calc(130px)
+  }
+}
+
+@media only screen and (max-width: 1250px) {
+  main {
+    width: calc(100% - 250px)
   }
 }

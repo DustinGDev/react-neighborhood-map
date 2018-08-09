@@ -73,7 +73,13 @@ this.zoom = 13;
 
 the lat lng values are actually the coordinates of the map center and api venue search. the zoom is just the zoom level. Just change the coordinates to something you like and adjust the zoom to your needs!
 
-Now everythign is setup! If you like to deploy your web app to the web you might like to setup an actual production server. That process is a little complicated but without you cant use the servers workers caching and offline abilitys provided by the team of the create-react-app team. A link to a guide here: https://react-server.io/docs/guides/production
+Now everythign is setup! If you like to deploy your web app to the web you might like to setup an actual production server. That process is a little complicated but without you cant use the servers workers caching and offline abilitys provided by the team of the create-react-app team.
+Just run the following commands in your terminal in the project folder:
+
+run build
+serve -s build
+
+now your production server should run on localhost:5000
 
 ## How to customize
 

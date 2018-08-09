@@ -7,8 +7,8 @@ import Header from './Header.js';
 
 // Enter your foresquare credentials here
 const foursquare = require('react-foursquare')({
-  clientID: '1I34DCFI2OSGBL3D0MUGX2RYJXNKVEAR5ARYD5DPNETHNF2I',
-  clientSecret: 'UDPZGP0PSA5A0344VE44O2ZJRDW4RUKPRSUVJ1DLL1QNRYBB'
+  clientID: 'CNDGIBVP2PRMHKKRLAHA1VAI3H5A',
+  clientSecret: 'QMQETKLOUPZPBKPOTTPLLTMJ1IOLLPJ3Y3VU0QFZFCI5JMYN'
 });
 
 class App extends Component {
@@ -50,9 +50,12 @@ class App extends Component {
          return foursquare.venues.getVenues({"ll": `${this.lat},${this.lng}`,
                                             "query": place})
                                             .then(res => {
-                                              if(res && res.meta.code === 200 &&  res.response.venues[0])
+                                              if (res.meta.code === 400) {
+                                                alert('Authentication error. The Foresquare API Keys are not correct, please contact the Webmaster')
+                                              }
+                                              else if(res && res.meta.code === 200 &&  res.response.venues[0])
                                               newArr.push(res.response.venues[0])
-                                              else if (!res.response.venues[0]) {
+                                              else if (res.response.venues && !res.response.venues[0]) {
                                                 console.log(`venue ${place} not found`)
                                               }
                                               else {
